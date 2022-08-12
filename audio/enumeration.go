@@ -74,6 +74,12 @@ func GetAudioDevices() (infos []config.AudioDevice, err error) {
 				ChannelsOut: d.MaxOutputChannels,
 				IsDefault:   d.Name == h.DefaultInputDevice.Name || d.Name == h.DefaultOutputDevice.Name,
 			}
+			if ad.ChannelsIn > 2 {
+				ad.ChannelsIn = 2
+			}
+			if ad.ChannelsOut > 2 {
+				ad.ChannelsOut = 2
+			}
 			infos = append(infos, ad)
 		}
 	}

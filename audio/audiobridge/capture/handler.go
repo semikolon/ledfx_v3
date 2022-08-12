@@ -25,10 +25,11 @@ func NewHandler(id string, byteWriter *audio.AsyncMultiWriter) (h *Handler, err 
 		return nil, fmt.Errorf("error getting PortAudio device info: %w", err)
 	}
 
+	fmt.Printf("Number of channels available: ", audioDevice.Name, audioDevice.ChannelsIn)
 	p := portaudio.StreamParameters{
 		Input: portaudio.StreamDeviceParameters{
 			Device:   dev,
-			Channels: dev.MaxInputChannels,
+			Channels: audioDevice.ChannelsIn, // dev.MaxInputChannels,
 		},
 		SampleRate:      dev.DefaultSampleRate,
 		FramesPerBuffer: int(dev.DefaultSampleRate / 60),
